@@ -9,7 +9,7 @@ import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-      },
+    },
     paper: {
         width: '50%',
         margin: 'auto ',
@@ -36,33 +36,26 @@ export default function Registration() {
     const classes = useStyles();
 
     const [name, setName] = useState('')
-    const [selectedFile, setSelectedFile] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('')
     // const [isFilePicked, setIsFilePicked] = useState(false);
 
     const handleLogin = () => {
-        alert(`${name} has successfully register.` )
+        // POST request using fetch inside useEffect React hook
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+        };
+        fetch('/api/signup', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log("----", data)
+                // alert(`${name} has successfully register.`)
+            });
 
-        history.push("/login");
     }
 
-    const handleUpload = (event) => {
-        setSelectedFile(event.target.files[0]);
-        // setIsFilePicked(true);
-    };
-    const handleSubmission = () => {
-        const formData = new FormData();
-
-        // Update the formData object 
-
-        formData.append('File', selectedFile);
-
-        // Details of the uploaded file 
-        console.log(selectedFile);
-
-        // Request made to the backend api 
-        // Send formData object 
-        axios.post("api/uploadfile", formData);
-    };
 
     return (
         <div className={classes.root} >
@@ -73,24 +66,27 @@ export default function Registration() {
                         <Typography>Registeration Here</Typography>
                     </Grid>
                     <Grid item>
-                    <TextField
-                                type="name"
-                                label="Name"
-                                name="name"
-                                variant="outlined"
-                                onChange={(e) => setName(e.target.value)}
-                            />
+                        <TextField
+                            type="name"
+                            label="Name"
+                            name="name"
+                            variant="outlined"
+                            onChange={(e) => setName(e.target.value)}
+                        />
                     </Grid>
                     <Grid item>
-                        <TextField label="Email" variant="outlined" />
+                        <TextField label="Email" type="email" variant="outlined"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                     </Grid>
                     <Grid item>
-                <Button variant='contained' color='secondary' >Upload Image</Button>
-                    <Input disableUnderline placeholder='No File Chosen' value={selectedFile}></Input>
+                    <TextField label="Password" type="password" variant="outlined"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
 
+                    </Grid>
                 </Grid>
-                </Grid>
-               
+
 
                 <Button
                     onClick={handleLogin}

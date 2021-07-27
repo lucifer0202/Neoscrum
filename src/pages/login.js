@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Button,
     TextField,
@@ -29,9 +29,24 @@ export default function Login() {
     const classes = useStyles();
     const history = useHistory();
 
-    const handleDashboard = () => {
-        
-        history.push("/dashboard");
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleLogin = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({email: email, password: password })
+        };
+        fetch('/api/login', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log("----", data)
+              
+                // alert(`${name} has successfully logged in.`)
+            });
+
+            history.push("/dashboard");
     }
     return (
         <Paper
@@ -53,6 +68,7 @@ export default function Login() {
                                 label="Email"
                                 name="username"
                                 variant="outlined"
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </Grid>
                         <Grid item>
@@ -61,7 +77,7 @@ export default function Login() {
                                 label="Password"
                                 name="password"
                                 variant="outlined"
-
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
                         </Grid>
@@ -71,7 +87,7 @@ export default function Login() {
                                 color="primary"
                                 type="submit"
                                 className="button-block"
-                                onClick={handleDashboard}
+                                onClick={handleLogin}
                             >
                                 Login
                             </Button>
