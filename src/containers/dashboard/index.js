@@ -1,112 +1,74 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
-    Button,
-    TextField,
-    Grid,
-    Paper,
-    AppBar,
-    Typography,
-    Toolbar,
-    InputBase,
-    Link,
+  Button,
+  TextField,
+  Grid,
+  Paper,
+  AppBar,
+  Typography,
+  Toolbar,
+  InputBase,
+  Link,
 } from "@material-ui/core";
-import GridView from '../../components/gridview'
 import { useHistory } from "react-router-dom";
-import Logo from '../../assets/login.png'
 import { alpha, makeStyles } from '@material-ui/core/styles';
 
 import SearchIcon from '@material-ui/icons/Search';
+import FeedbackContext from '../../context/feedbackContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(3),
+      width: "auto",
+      height: 'auto',
     },
   },
+
 }));
 
 
-export default function Dashboard() {
-    const classes = useStyles();
-    const history = useHistory();
+export default function Dashboard({ text, describe }) {
+  const classes = useStyles();
+  const history = useHistory();
 
-    const [isDashboardVisible, setIsDashboardVisible] = useState(false)
+  const [feedback, setFeedback] = useContext(FeedbackContext)
+  const time = new Date()
 
-    const handleFeedback = () => {
-        history.push("/feedback");
-    }
+  return (
+    <>
+      <div className={classes.root}>
 
-    return (
-        <div>
-            <AppBar position="static" alignitems="center" style={{ background: 'grey' }}>
-                <Toolbar>
-                    <Grid style={{ display: 'flex' }} >
-                        <div ><img style={{ width: '50px' }} src={Logo} /> </div>
-                        <div style={{ padding: '12px' }}> <Typography>SonamBasil@gmail.com</Typography></div>
-                    </Grid>
-                    <Grid container spacing={4} justify='flex-end' wrap="wrap">
-                        <Grid item>
-                            <div className={classes.search}>
-                                <div className={classes.searchIcon}>
-                                    <SearchIcon />
-                                </div>
-                                <InputBase
-                                    placeholder="Search…"
-                                    classes={{
-                                        root: classes.inputRoot,
-                                        input: classes.inputInput,
-                                    }}
-                                    inputProps={{ 'aria-label': 'search' }}
-                                />
-                            </div>
-                        </Grid>
-                        <Grid item>
-                            <Button variant="contained" color='primary' onClick={handleFeedback}>Add Feedback</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button variant="contained" color='secondary'>Log Out</Button>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <GridView isDashboardVisible={isDashboardVisible} />
-        </div>
-    )
+        <Paper elevation={15} >
+          <Grid item style={{ width: '300px' }} >
+            <Grid item style={{ background: 'cadetblue', margin: '10px', width: 'auto', height: '30px' }}>
+              <Typography>Feedbacks</Typography>
+            </Grid>
+            <Grid container margin='10px'>
+
+              <Grid item style={{ background: 'antiquewhite', width: 'inherit', margin: '10px', height: '50px' }}>
+                <Typography>{text}</Typography>
+              </Grid>
+              <Grid item style={{ background: ' #0080001c', width: 'inherit', margin: '10px', height: '100px' }}>
+                <Typography>{describe}</Typography>
+              </Grid>
+            </Grid>
+            <Grid style={{ display: 'block', justifyContent: 'flex-end', margin: '20px' }}>
+              <Grid container style={{ display: 'block', justifyContent: 'flex-end', margin: '20px' }}>
+                <Grid item>
+                  <Typography>Send By:</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography>Posted on: {time.toDateString()}</Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+
+        </Paper>
+      </div>
+    </>
+  )
 }
