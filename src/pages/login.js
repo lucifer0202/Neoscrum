@@ -116,83 +116,15 @@ export default function Login() {
                             <Link href="#" variant="body2">
                                 Forgot Password?
                             </Link>
-<div></div>
+                            <div></div>
                             <br />
-                            <div style={{ border: 'solid',color: '#c1c1c1' }}></div>
+                            <div style={{ border: 'solid', color: '#c1c1c1' }}></div>
                             <br />
                             <Button variant='contained' onClick={handleRegister} style={{ background: 'greenyellow' }}>Register</Button>
                         </Grid>
                     </Paper>
                 </div>
             </div>
-            {/* <Grid
-                        container
-                        direction="column"
-                        alignItems="center"
-                        justify="center"
-                        style={{ minHeight: '100vh', background: '#9c9cf9' }}
-                    >
-
-                        <Grid item >
-
-                            <Paper
-                                variant="elevation"
-                                elevation={2}
-                                className={classes.paper}
-                            >
-                                <Grid item>
-                                    <Typography component="h1" variant="h5" margin='auto'>
-                                        Sign in
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <form >
-                                        <Grid container direction="column" spacing={2}>
-                                            <Grid item>
-                                                <TextField
-                                                    type="email"
-                                                    label="Email"
-                                                    name="username"
-                                                    variant="outlined"
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                />
-                                            </Grid>
-                                            <Grid item>
-                                                <TextField
-                                                    type="password"
-                                                    label="Password"
-                                                    name="password"
-                                                    variant="outlined"
-                                                    onChange={(e) => setPassword(e.target.value)}
-                                                    required
-                                                />
-                                            </Grid>
-                                            <Grid item>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    type="submit"
-                                                    className="button-block"
-                                                    onClick={handleLogin}
-                                                >
-                                                    Login
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    </form>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        Forgot Password?
-                                    </Link>
-                                    <br />
-                                    <Link href="/signup" variant="body2">
-                                        Register
-                                    </Link>
-                                </Grid>
-                            </Paper>
-                        </Grid>
-                    </Grid> */}
         </div >
     )
 }
