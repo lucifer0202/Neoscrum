@@ -7,6 +7,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useHistory } from "react-router-dom";
 
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -40,12 +41,6 @@ export default function Feedback() {
     }
     return (
         <div>
-
-            <AppBar position="static">
-                <Toolbar>
-                    <Button variant='contained' color="secondary" onClick={handleBackbutton}><ArrowBackIcon /></Button>
-                </Toolbar>
-            </AppBar>
             <div className={classes.root}>
                 <Paper elevation={15} >
                     <Grid item>

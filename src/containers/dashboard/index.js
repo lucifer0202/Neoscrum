@@ -1,20 +1,15 @@
 import React, { useState, useContext } from 'react'
 import {
-  Button,
-  TextField,
   Grid,
   Paper,
-  AppBar,
   Typography,
-  Toolbar,
-  InputBase,
-  Link,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { alpha, makeStyles } from '@material-ui/core/styles';
 
 import SearchIcon from '@material-ui/icons/Search';
 import FeedbackContext from '../../context/feedbackContext';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
       height: 'auto',
     },
   },
+  container: {
+    
+  }
 
 }));
 
@@ -33,8 +31,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard({ text, describe }) {
   const classes = useStyles();
   const history = useHistory();
+  
 
-  const [feedback, setFeedback] = useContext(FeedbackContext)
+  const {feedback, setFeedback} = useContext(FeedbackContext)
   const time = new Date()
 
   return (
@@ -43,16 +42,17 @@ export default function Dashboard({ text, describe }) {
 
         <Paper elevation={15} >
           <Grid item style={{ width: '300px' }} >
-            <Grid item style={{ background: 'cadetblue', margin: '10px', width: 'auto', height: '30px' }}>
-              <Typography>Feedbacks</Typography>
+            <Grid item style={{ background: 'cadetblue', margin: '10px', width: 'auto', height: '30px', display: 'flex', justifyContent: 'space-between'}}>
+              <Typography >Feedbacks</Typography>
+              <Typography>{moment(time).local().startOf('seconds').fromNow()}</Typography>
             </Grid>
             <Grid container margin='10px'>
 
-              <Grid item style={{ background: 'antiquewhite', width: 'inherit', margin: '10px', height: '50px' }}>
-                <Typography>{text}</Typography>
+              <Grid item style={{ background: 'antiquewhite', width: 'inherit', margin: '10px', height: '50px' ,display: 'flex', justifyContent: 'center' }}>
+                <Typography style={{alignSelf: 'center'}}> {text}</Typography>
               </Grid>
-              <Grid item style={{ background: ' #0080001c', width: 'inherit', margin: '10px', height: '100px' }}>
-                <Typography>{describe}</Typography>
+              <Grid item style={{ background: 'white', width: 'inherit', margin: '10px', height: '100px', fontStyle: 'italic',textAlign: 'left' }}>
+                <Typography style={{ fontStyle: 'italic',textAlign: 'left'}}> Description: {describe}</Typography>
               </Grid>
             </Grid>
             <Grid style={{ display: 'block', justifyContent: 'flex-end', margin: '20px' }}>

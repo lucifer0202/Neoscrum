@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
     Button,
     TextField,
@@ -10,24 +10,19 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import Background from '../assets/image6.jpg'
+import FeedbackContext from '../context/feedbackContext';
+import './style.css'
 
 
 
 const useStyles = makeStyles((theme) => ({
-
-    // root: {
-    //     flexGrow: 1,
-    //     background: 'red',
-    //     height: '100vh'
-
-    // },
     paper: {
         width: '400px',
         margin: 'auto ',
         display: 'grid',
-        height: '20rem',
-        background: 'linear-gradient( 45deg, #f1f6fb, #6f636300)'
+        height: '20rem'
     },
+
 
 }));
 
@@ -36,49 +31,56 @@ export default function Login() {
     const history = useHistory();
 
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, password: password })
-        };
-        fetch('/api/login', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                console.log("----", data)
+    const { setUserInfo } = useContext(FeedbackContext);
 
-                // alert(`${name} has successfully logged in.`)
-            });
+
+    const handleLogin = (e) => {
+        // const requestOptions = {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ email: email, password: password })
+        // };
+        e.preventDefault()
+        setUserInfo({ email })
+        console.log("$$$", email)
+
+        // fetch('/api/login', requestOptions)
+        //     .then(response => response.json())
+        //     .then(data => {
+        // console.log("----", data)
+        // console.log("###",data.email)
+        //     return (
+        //         <div>{data.email}</div>
+        //     )
+
+        //     alert(`${email} has successfully logged in.`)
+        // });
 
         history.push("/dashboard");
     }
+    const handleRegister = () => {
+        history.push("/signup")
+    }
     return (
+        <div style={{ background: '#9c9cf9' }}>
 
-        <Grid
-            container
-            direction="column"
-            alignItems="center"
-            justify="center"
-            style={{ minHeight: '100vh',background: 'linear-gradient(45deg, #000000eb, transparent)' }}
-        >
+            <div className="split left">
+                <div className="centered">
+                    <h1>neoscrum</h1>
+                    <p><h2> App helps you collect customer feedback</h2></p>
+                </div>
+            </div>
 
-            <Grid item >
-                
-            <Paper
-                variant="elevation"
-                elevation={2}
-                className={classes.paper}
-            >
-                <Grid item>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    <form >
-                        <Grid container direction="column" spacing={2}>
+            <div className="split right">
+                <div className="centered">
+                    <Paper
+                        variant="elevation"
+                        elevation={2}
+                        className={classes.paper}
+                    >
+                        <Grid container direction="column" spacing={2} style={{ margin: 'auto' }}>
                             <Grid item>
                                 <TextField
                                     type="email"
@@ -110,16 +112,87 @@ export default function Login() {
                                 </Button>
                             </Grid>
                         </Grid>
-                    </form>
-                </Grid>
-                <Grid item>
-                    <Link href="#" variant="body2">
-                        Forgot Password?
-                    </Link>
-                </Grid>
-            </Paper>
-            </Grid>
+                        <Grid item>
+                            <Link href="#" variant="body2">
+                                Forgot Password?
+                            </Link>
+<div></div>
+                            <br />
+                            <div style={{ border: 'solid',color: '#c1c1c1' }}></div>
+                            <br />
+                            <Button variant='contained' onClick={handleRegister} style={{ background: 'greenyellow' }}>Register</Button>
+                        </Grid>
+                    </Paper>
+                </div>
+            </div>
+            {/* <Grid
+                        container
+                        direction="column"
+                        alignItems="center"
+                        justify="center"
+                        style={{ minHeight: '100vh', background: '#9c9cf9' }}
+                    >
 
-        </Grid>
+                        <Grid item >
+
+                            <Paper
+                                variant="elevation"
+                                elevation={2}
+                                className={classes.paper}
+                            >
+                                <Grid item>
+                                    <Typography component="h1" variant="h5" margin='auto'>
+                                        Sign in
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <form >
+                                        <Grid container direction="column" spacing={2}>
+                                            <Grid item>
+                                                <TextField
+                                                    type="email"
+                                                    label="Email"
+                                                    name="username"
+                                                    variant="outlined"
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                />
+                                            </Grid>
+                                            <Grid item>
+                                                <TextField
+                                                    type="password"
+                                                    label="Password"
+                                                    name="password"
+                                                    variant="outlined"
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    required
+                                                />
+                                            </Grid>
+                                            <Grid item>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    type="submit"
+                                                    className="button-block"
+                                                    onClick={handleLogin}
+                                                >
+                                                    Login
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="#" variant="body2">
+                                        Forgot Password?
+                                    </Link>
+                                    <br />
+                                    <Link href="/signup" variant="body2">
+                                        Register
+                                    </Link>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                    </Grid> */}
+        </div >
     )
 }
